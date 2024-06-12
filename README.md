@@ -1,4 +1,4 @@
-# CarReachBall
+# reach-ball-env
 
 This repository contains a custom OpenAI Gym environment for a three-wheel car simulation using PyBullet. The environment is designed to train an agent to reach a soccer ball using the SAC algorithm in Stable Baselines3. The soccer ball and the car are located randomly in each episode.
 

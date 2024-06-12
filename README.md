@@ -27,3 +27,10 @@ To visualize the trained model, run:
 ```
 python3 visualize.py
 ```
+
+If you want to change the model path and the number of episodes, add the `--model_path {your_path} --len 5` option:
+```
+python3 visualize.py --model_path example/path/model --len 3
+```
+
+

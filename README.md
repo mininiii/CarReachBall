@@ -20,6 +20,14 @@ If you want to visualize the training process, add the `--gui True` option:
 python3 sac_agent.py --gui True
 ```
 
+## Tensorboard
+```
+tensorboard --logdir=./logs
+```
+<img width="1152" alt="success_rate" src="https://github.com/mininiii/reach-ball-env/assets/96100666/c2efec63-616e-4146-b751-839a27ad22b7">
+
+
+
 ## Visualize Trained Model
 
 To visualize the trained model, run:

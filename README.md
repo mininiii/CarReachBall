@@ -24,7 +24,8 @@ python3 sac_agent.py --gui True
 ```
 tensorboard --logdir=./logs
 ```
-<img width="1152" alt="success_rate" src="https://github.com/mininiii/reach-ball-env/assets/96100666/c2efec63-616e-4146-b751-839a27ad22b7">
+<img width="1096" alt="tensorboard_success_rate" src="https://github.com/mininiii/reach-ball-env/assets/96100666/538f92d1-f1ea-4599-aef0-9645520a1f40">
+
 
 
 

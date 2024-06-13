@@ -7,6 +7,7 @@ from stable_baselines3.common.monitor import Monitor
 from carEnv import ThreeWheelCarEnv
 from callback import SaveOnBestTrainingRewardCallback
 import argparse
+from success_callback import SuccessRateCallback
 
 def train(env_id='ThreeWheelCar', gui_mode=False, algo_class=SAC, log_base_dir="logs", model_base_dir="models"):
     # set arguments --------------------------------------------------------------------------
@@ -34,23 +35,12 @@ def train(env_id='ThreeWheelCar', gui_mode=False, algo_class=SAC, log_base_dir="
     
 
     if env_id == "ThreeWheelCar":
-        total_iterations = 160_000
+        total_iterations = 250_000
         learning_starts = 1000
         batch_size = 256
         policy_kwargs = {
             'net_arch': [64, 64],
             'n_critics': 1,        
-        }
-    else:
-        if env_id == 'PandaPush-v2':
-            total_iterations = 1_500_000
-        else:
-            total_iterations = 3_000_000            
-        learning_starts = 1000
-        batch_size = 2048
-        policy_kwargs = {
-            'net_arch': [512, 512, 512],
-            'n_critics': 2,
         }
         
     model = algo_class(
@@ -63,8 +53,7 @@ def train(env_id='ThreeWheelCar', gui_mode=False, algo_class=SAC, log_base_dir="
         gamma=0.95,
         # --------------------------------        
         tau=0.005,        
-        # learning_rate=0.001,
-        learning_rate=1e-3,        
+        learning_rate=0.001,        
         train_freq=1,
         gradient_steps=1,     
         optimize_memory_usage=False,
@@ -88,14 +77,19 @@ def train(env_id='ThreeWheelCar', gui_mode=False, algo_class=SAC, log_base_dir="
         check_freq=1000, 
         log_dir=callback_log_path
     )
+    success_rate_callback = SuccessRateCallback(
+        check_freq=1000, 
+        log_dir=callback_log_path
+    )
     model.learn(
         total_timesteps=total_iterations,
-        callback=callback,
+        callback=[callback, success_rate_callback],
         log_interval=10,
         tb_log_name="SAC",
         reset_num_timesteps=True,
         progress_bar=True,
     )
+
 
     # save the trained model ----------------------------------------------------------------------
     model.save(model_path+"/final_model")

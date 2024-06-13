@@ -54,7 +54,7 @@ class ThreeWheelCarEnv(gym.Env):
         self.car_position = [random.uniform(1, 3), random.uniform(-2, 2)]
         self.car_orientation = np.random.uniform(low=-np.pi, high=np.pi)
         self.ball_position = [random.uniform(-5, -1), random.uniform(-3, 3)]
-
+    
         # 자동차와 공을 URDF 파일에서 로드
         urdf_path = pybullet_data.getDataPath()
         plane_path = os.path.join(urdf_path, "samurai.urdf")
@@ -132,9 +132,10 @@ class ThreeWheelCarEnv(gym.Env):
         
         reward = self.compute_reward(obs['achieved_goal'], obs['desired_goal'], {})
 
-        
         done = reward == 200 or self.step_counter > 6000
-        return obs, reward, done, {}
+        
+        success = reward == 200
+        return obs, reward, done, {'is_success': success}
 
     def render(self, mode='human'):
         car_pos, _ = p.getBasePositionAndOrientation(self.car_id)
